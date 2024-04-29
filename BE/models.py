@@ -1,7 +1,19 @@
 import uuid
+from datetime import datetime
 
-from sqlalchemy import Column, String, Table, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import (
+    Column,
+    String,
+    Table,
+    ForeignKey,
+    func,
+    Integer,
+    Computed,
+    Identity,
+    Sequence,
+)
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import relationship, session
 from sqlalchemy_utils import UUIDType, EmailType, Timestamp
 
 from database import Base, engine
@@ -17,7 +29,10 @@ tag_order_association = Table(
 class Order(Base, Timestamp):
     __tablename__ = "orders"
 
-    id = Column(UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
+    # id should be uuid, but sqlite not supporting autoincrement seq for non-primary keys (never wanna work with
+    # sqlite again tbh)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    code = Column(String, Computed(f"{datetime.now().year} || printf('%04d',id)"))
     email = Column(EmailType(), nullable=False)
     tags = relationship(
         "Tag",
