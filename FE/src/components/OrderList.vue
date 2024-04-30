@@ -2,8 +2,8 @@
 import createOrderDialog from "./createOrderDialog.vue";
 
 export default {
-  data(){
-    return{
+  data() {
+    return {
       headers: [
         {title: 'code', value: 'code'},
         {title: 'email', value: 'email'},
@@ -26,7 +26,7 @@ export default {
   created() {
     this.fetchData()
   },
-  components:{
+  components: {
     createOrderDialog
   }
 }
@@ -35,7 +35,7 @@ export default {
 <template>
   <v-container>
     <create-order-dialog @reloadOrders="fetchData"></create-order-dialog>
-<!--    TODO somehow it's not updating table when the ordersData are changed(from child)... But it should -->
+    <!--    TODO somehow it's not updating table when the ordersData are changed(from child)... But it should -->
     <v-data-table
       v-model="loading"
       :items="ordersData"

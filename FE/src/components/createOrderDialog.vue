@@ -13,6 +13,7 @@
           <v-text-field
             v-model="email"
             label="E-mail"
+            :errorMessages="errorMessages"
           ></v-text-field>
 
           <v-btn
@@ -37,14 +38,15 @@ export default {
     return {
       dialog: false,
       loading: false,
+      errorMessages: [],
       email: '',
     }
   },
   methods: {
     async submit(event) {
       this.loading = true
+      this.errorMessages = []
 
-      console.log(event)
       const response = await fetch('http://localhost:8000',
         {
           method: "POST",
@@ -56,10 +58,12 @@ export default {
       )
       if (response.ok) {
         await this.$emit("reloadOrders")
-        this.loading = false
         this.dialog = false
         this.email = ''
+      } else{
+        this.errorMessages = [response.statusText]
       }
+      this.loading = false
     },
   },
   emits: ['reloadOrders']
