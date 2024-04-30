@@ -31,10 +31,15 @@ def get_db():
 
 
 @app.get("/")
-async def root(db: Session = Depends(get_db)):
+async def orders_list(db: Session = Depends(get_db)):
     return crud.get_orders(db)
 
 
 @app.post("/")
-async def root(order: schemas.OrderBase, db: Session = Depends(get_db)):
+async def orders_create(order: schemas.OrderBase, db: Session = Depends(get_db)):
     return crud.create_order(db, order)
+
+
+@app.post("/tags")
+async def tags_create(tag: schemas.TagBase, db: Session = Depends(get_db)):
+    return crud.create_tag(db, tag)

@@ -7,9 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    CreateOrderDialog: typeof import('./src/components/createOrderDialog.vue')['default']
+    CreateOrderDialog: typeof import('./src/components/CreateOrderDialog.vue')['default']
+    CreateTagDialog: typeof import('./src/components/CreateTagDialog.vue')['default']
     OrderList: typeof import('./src/components/OrderList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TagList: typeof import('./src/components/TagList.vue')['default']
   }
 }

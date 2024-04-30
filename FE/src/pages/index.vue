@@ -1,4 +1,6 @@
 <template>
+  <h2>Tags</h2>
+  <CreateTagDialog/>
   <h2>Orders</h2>
   <OrderList />
 </template>

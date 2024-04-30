@@ -14,3 +14,11 @@ def create_order(db: Session, order: schemas.OrderBase):
     db.commit()
     db.refresh(db_order)
     return db_order
+
+
+def create_tag(db: Session, tag: schemas.TagBase):
+    db_tag = models.Tag(name=tag.name)
+    db.add(db_tag)
+    db.commit()
+    db.refresh(db_tag)
+    return db_tag

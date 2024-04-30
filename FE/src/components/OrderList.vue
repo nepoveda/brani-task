@@ -1,7 +1,9 @@
 <script lang="ts">
-import createOrderDialog from "./createOrderDialog.vue";
+import {defineComponent} from 'vue'
+import createOrderDialog from "./CreateOrderDialog.vue";
 
-export default {
+export default defineComponent({
+  name: "OrderList",
   data() {
     return {
       headers: [
@@ -15,11 +17,12 @@ export default {
   },
   methods: {
     async fetchData() {
-      console.log("fetching orders")
       this.ordersData = null
       this.loading = true
       let res = await fetch('http://127.0.0.1:8000')
-      this.ordersData = await res.json()
+      if (res.ok) {
+        this.ordersData = await res.json()
+      }
       this.loading = false
     },
   },
@@ -29,7 +32,7 @@ export default {
   components: {
     createOrderDialog
   }
-}
+})
 </script>
 
 <template>

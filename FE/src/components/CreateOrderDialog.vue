@@ -5,7 +5,7 @@
     <v-dialog v-model="dialog" width="auto">
       <v-card
         max-width="400"
-        prepend-icon="mdi-update"
+        prepend-icon="mdi-plus-box"
         text="Please send your email"
         title="Create order"
       >
@@ -25,7 +25,7 @@
           ></v-btn>
         </v-form>
         <template v-slot:actions>
-          <v-btn class="ms-auto" text="Ok" @click="dialog = false"></v-btn>
+          <v-btn class="ms-auto" text="Close" @click="dialog = false"></v-btn>
         </template>
       </v-card>
     </v-dialog>
@@ -33,7 +33,9 @@
 </template>
 
 <script lang="ts">
-export default {
+import {defineComponent} from 'vue'
+export default defineComponent({
+  name: "CreateOrderDialog",
   data() {
     return {
       dialog: false,
@@ -43,7 +45,7 @@ export default {
     }
   },
   methods: {
-    async submit(event) {
+    async submit(event: Event) {
       this.loading = true
       this.errorMessages = []
 
@@ -67,5 +69,5 @@ export default {
     },
   },
   emits: ['reloadOrders']
-}
+})
 </script>
