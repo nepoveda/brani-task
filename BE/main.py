@@ -40,6 +40,11 @@ async def orders_create(order: schemas.OrderBase, db: Session = Depends(get_db))
     return crud.create_order(db, order)
 
 
+@app.get("/tags")
+async def tags_list(db: Session = Depends(get_db)):
+    return crud.get_tags(db)
+
+
 @app.post("/tags")
 async def tags_create(tag: schemas.TagBase, db: Session = Depends(get_db)):
     return crud.create_tag(db, tag)

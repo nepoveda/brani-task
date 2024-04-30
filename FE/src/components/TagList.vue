@@ -20,11 +20,28 @@ export default defineComponent({
       this.loading = false
 
     }
-  }
+  },
+  created() {
+      this.fetchData()
+  },
 })
 </script>
 
 <template>
+  <CreateTagDialog @reloadTags="fetchData"/>
+  <div class="d-flex justify-center">
+    <v-chip
+      class="ma-2"
+      v-model="tags"
+      v-for="tag in tags"
+      label
+      variant="outlined"
+      prepend-icon="mdi-tag"
+    >
+      {{tag.name}}
+    </v-chip>
+
+  </div>
 
 </template>
 

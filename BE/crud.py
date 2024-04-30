@@ -16,6 +16,10 @@ def create_order(db: Session, order: schemas.OrderBase):
     return db_order
 
 
+def get_tags(db: Session):
+    return db.query(models.Tag).all()
+
+
 def create_tag(db: Session, tag: schemas.TagBase):
     db_tag = models.Tag(name=tag.name)
     db.add(db_tag)

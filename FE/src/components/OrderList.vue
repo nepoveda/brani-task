@@ -40,7 +40,7 @@ export default defineComponent({
     <create-order-dialog @reloadOrders="fetchData"></create-order-dialog>
     <!--    TODO somehow it's not updating table when the ordersData are changed(from child)... But it should -->
     <v-data-table
-      v-model="loading"
+      v-model="ordersData"
       :items="ordersData"
       :loading="loading"
       :headers="headers"

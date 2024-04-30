@@ -26,7 +26,7 @@ export default defineComponent({
         }
       )
       if (response.ok) {
-        await this.$emit("reloadOrders")
+        await this.$emit("reloadTags")
         this.dialog = false
         this.name = ''
       } else{
@@ -35,6 +35,7 @@ export default defineComponent({
       this.loading = false
     },
   },
+  emits: ['reloadTags']
 })
 </script>
 
