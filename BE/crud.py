@@ -1,19 +1,16 @@
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
-from sqlalchemy_utils.types import uuid
 import models
-
-
-def get_order(db: Session, order_id: uuid):
-    return db.query(models.Order).get(models.Order.id == order_id)
+import schemas
 
 
 def get_orders(db: Session):
-    return db.query(models.Order).all()
+    return db.query(models.Order).order_by(desc(models.Order.created)).all()
 
 
-def create_order(db: Session):
-    order = models.Order(email="bla@co.bla")
-    db.add(order)
+def create_order(db: Session, order: schemas.OrderBase):
+    db_order = models.Order(email=order.email)
+    db.add(db_order)
     db.commit()
-    db.refresh(order)
-    return order
+    db.refresh(db_order)
+    return db_order
