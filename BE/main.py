@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.params import Depends
 from sqlalchemy.orm import Session
 
 import crud
@@ -48,3 +49,8 @@ async def tags_list(db: Session = Depends(get_db)):
 @app.post("/tags")
 async def tags_create(tag: schemas.TagBase, db: Session = Depends(get_db)):
     return crud.create_tag(db, tag)
+
+
+@app.get("/to")
+async def to(db: Session = Depends(get_db)):
+    return crud.get_tag_order_associations(db)

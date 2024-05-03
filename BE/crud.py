@@ -26,3 +26,7 @@ def create_tag(db: Session, tag: schemas.TagBase):
     db.commit()
     db.refresh(db_tag)
     return db_tag
+
+
+def get_tag_order_associations(db: Session):
+    return db.query(models.tag_order_association).all()
