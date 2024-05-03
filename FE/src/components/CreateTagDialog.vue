@@ -1,5 +1,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {mapActions} from "vuex";
 
 export default defineComponent({
   name: "CreateTagDialog",
@@ -12,6 +13,7 @@ export default defineComponent({
     }
   },
   methods: {
+    ...mapActions(['fetchTags']),
     async submit(event: Event) {
       this.loading = true
       this.errorMessages = []
@@ -26,7 +28,7 @@ export default defineComponent({
         }
       )
       if (response.ok) {
-        await this.$emit("reloadTags")
+        await this.fetchTags()
         this.dialog = false
         this.name = ''
       } else{

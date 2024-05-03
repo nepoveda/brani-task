@@ -1,47 +1,39 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {mapActions} from "vuex";
 
 export default defineComponent({
   name: "TagList",
-  data() {
-    return {
-      loading: false,
-      tags: null
+  computed: {
+    tags() {
+      return this.$store.state.tags
     }
   },
   methods: {
-    async fetchData() {
-      this.tags = null
-      this.loading = null
-      let res = await fetch('http://localhost:8000/tags')
-      if (res.ok) {
-        this.tags = await res.json()
-      }
-      this.loading = false
-
-    }
+    ...mapActions(['fetchTags'])
   },
   created() {
-      this.fetchData()
-  },
+    this.fetchTags()
+  }
 })
 </script>
 
 <template>
-  <CreateTagDialog @reloadTags="fetchData"/>
-  <div class="d-flex justify-center">
-    <v-chip
-      class="ma-2"
-      v-model="tags"
-      v-for="tag in tags"
-      label
-      variant="outlined"
-      prepend-icon="mdi-tag"
-    >
-      {{tag.name}}
-    </v-chip>
+  <v-container>
+    <CreateTagDialog/>
+    <div class="d-flex justify-center ">
+      <v-chip
+        class="ma-2"
+        v-model="this.$store.state.tags"
+        v-for="tag in this.$store.state.tags"
+        labstore.state="outlined"
+        prepend-icon="mdi-tag"
+      >
+        {{ tag.name }}
+      </v-chip>
 
-  </div>
+    </div>
+  </v-container>
 
 </template>
 

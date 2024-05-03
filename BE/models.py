@@ -8,8 +8,11 @@ from sqlalchemy import (
     ForeignKey,
     Integer,
     Computed,
+    func,
+    select,
+    UniqueConstraint,
 )
-from sqlalchemy.orm import relationship, session
+from sqlalchemy.orm import relationship
 from sqlalchemy_utils import UUIDType, EmailType, Timestamp
 
 from database import Base, engine
@@ -17,7 +20,7 @@ from database import Base, engine
 tag_order_association = Table(
     "tag_order_association",
     Base.metadata,
-    Column("order_id", UUIDType, ForeignKey("orders.id")),
+    Column("order_id", Integer, ForeignKey("orders.id")),
     Column("tag_id", UUIDType, ForeignKey("tags.id")),
 )
 
@@ -42,6 +45,7 @@ class Tag(Base):
 
     id = Column(UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
+    UniqueConstraint(name)
     orders = relationship(
         "Order", secondary=tag_order_association, back_populates="tags"
     )
