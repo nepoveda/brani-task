@@ -29,7 +29,7 @@ export default defineComponent({
         labstore.state="outlined"
         prepend-icon="mdi-tag"
       >
-        {{ tag.name }}
+        {{ tag.name }} ({{tag.orders.length}})
       </v-chip>
 
     </div>

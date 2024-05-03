@@ -1,11 +1,16 @@
-from sqlalchemy import desc
-from sqlalchemy.orm import Session
+from sqlalchemy import desc, func
+from sqlalchemy.orm import Session, joinedload
 import models
 import schemas
 
 
 def get_orders(db: Session):
-    return db.query(models.Order).order_by(desc(models.Order.created)).all()
+    return (
+        db.query(models.Order)
+        .options(joinedload(models.Order.tags))
+        .order_by(desc(models.Order.created))
+        .all()
+    )
 
 
 def create_order(db: Session, order: schemas.OrderBase):
@@ -17,7 +22,7 @@ def create_order(db: Session, order: schemas.OrderBase):
 
 
 def get_tags(db: Session):
-    return db.query(models.Tag).all()
+    return db.query(models.Tag).options(joinedload(models.Tag.orders)).all()
 
 
 def create_tag(db: Session, tag: schemas.TagBase):

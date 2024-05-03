@@ -12,7 +12,8 @@ from sqlalchemy import (
     select,
     UniqueConstraint,
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import relationship, object_session
 from sqlalchemy_utils import UUIDType, EmailType, Timestamp
 
 from database import Base, engine
