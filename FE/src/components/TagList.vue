@@ -1,19 +1,12 @@
 <script lang="ts">
+import {mapState} from "vuex";
 import {defineComponent} from 'vue'
-import {mapActions} from "vuex";
 
 export default defineComponent({
   name: "TagList",
-  computed: {
-    tags() {
-      return this.$store.state.tags
-    }
-  },
-  methods: {
-    ...mapActions(['fetchTags'])
-  },
+  computed: mapState("tags", ["allTags"]),
   created() {
-    this.fetchTags()
+    this.$store.dispatch('tags/fetchTags')
   }
 })
 </script>
@@ -24,8 +17,7 @@ export default defineComponent({
     <div class="d-flex justify-center ">
       <v-chip
         class="ma-2"
-        v-model="this.$store.state.tags"
-        v-for="tag in this.$store.state.tags"
+        v-for="tag in allTags"
         labstore.state="outlined"
         prepend-icon="mdi-tag"
       >

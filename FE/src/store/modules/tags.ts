@@ -1,10 +1,10 @@
 const state = () => ({
-  tags: [],
+  allTags: [],
 })
 
 const mutations = {
-  setTags(state, {tags}): void {
-    state.tags = tags;
+  setTags(state, tags): void {
+    state.allTags = tags;
   }
 }
 
@@ -12,7 +12,8 @@ const actions = {
   async fetchTags({commit}) {
     let res = await fetch('http://localhost:8000/tags')
     if (res.ok) {
-      commit('setTags', await res.json())
+      const tags = await res.json()
+      commit('setTags', tags)
     } else {
       commit('setTags', [])
     }

@@ -13,7 +13,7 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapActions(['fetchTags']),
+    ...mapActions('tags',['fetchTags']),
     async submit(event: Event) {
       this.loading = true
       this.errorMessages = []
@@ -37,7 +37,6 @@ export default defineComponent({
       this.loading = false
     },
   },
-  emits: ['reloadTags']
 })
 </script>
 

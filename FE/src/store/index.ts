@@ -1,26 +1,13 @@
 import {createStore} from 'vuex'
+import tags from './modules/tags'
+import orders from './modules/orders'
 
 const store = createStore({
-  state() {
-    return {
-      tags: []
-    }
+  modules: {
+    tags,
+    orders
   },
-  mutations: {
-    loadTags(state, tags) {
-      state.tags = tags
-    }
-  },
-  actions: {
-    async fetchTags({commit}) {
-      let res = await fetch('http://localhost:8000/tags')
-      if (res.ok) {
-        commit('loadTags', await res.json())
-      } else {
-        commit('loadTags', [])
-      }
-    },
-  }
+  strict: false
 })
 
 export default store

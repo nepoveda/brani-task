@@ -34,6 +34,7 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {mapActions} from "vuex";
 export default defineComponent({
   name: "CreateOrderDialog",
   data() {
@@ -45,6 +46,7 @@ export default defineComponent({
     }
   },
   methods: {
+    ...mapActions('orders', ['fetchOrders']),
     async submit(event: Event) {
       this.loading = true
       this.errorMessages = []
@@ -59,7 +61,7 @@ export default defineComponent({
         }
       )
       if (response.ok) {
-        await this.$emit("reloadOrders")
+        await this.fetchOrders()
         this.dialog = false
         this.email = ''
       } else{
@@ -68,6 +70,5 @@ export default defineComponent({
       this.loading = false
     },
   },
-  emits: ['reloadOrders']
 })
 </script>

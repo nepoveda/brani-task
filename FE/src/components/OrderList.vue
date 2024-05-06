@@ -1,6 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import createOrderDialog from "./CreateOrderDialog.vue";
+import {mapActions, mapState} from "vuex";
 
 export default defineComponent({
   name: "OrderList",
@@ -11,23 +12,11 @@ export default defineComponent({
         {title: 'email', value: 'email'},
         {title: 'date', key: 'created', value: (item) => `${new Date(item.created).toLocaleDateString()}`}
       ],
-      ordersData: null,
-      loading: false,
     }
   },
-  methods: {
-    async fetchData() {
-      this.ordersData = null
-      this.loading = true
-      let res = await fetch('http://127.0.0.1:8000')
-      if (res.ok) {
-        this.ordersData = await res.json()
-      }
-      this.loading = false
-    },
-  },
+  computed: mapState("orders", ["allOrders"]),
   created() {
-    this.fetchData()
+    this.$store.dispatch('orders/fetchOrders')
   },
   components: {
     createOrderDialog
@@ -37,14 +26,11 @@ export default defineComponent({
 
 <template>
   <v-container>
-    <create-order-dialog @reloadOrders="fetchData"></create-order-dialog>
-    <!--    TODO somehow it's not updating table when the ordersData are changed(from child)... But it should -->
+    <create-order-dialog></create-order-dialog>
     <v-data-table
-      v-model="ordersData"
-      :items="ordersData"
-      :loading="loading"
+      v-model="allOrders"
+      :items="allOrders"
       :headers="headers"
-      :hide-default-footer="true"
     ></v-data-table>
   </v-container>
 </template>
